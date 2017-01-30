@@ -11,7 +11,6 @@ class CraigslistSpider(BaseSpider):
 
     def parse(self, response):
         site = HtmlXPathSelector(response)
-        # rentals = site.xpath("//li").css(".result-row")
         rentals = site.xpath('//li[contains(@class,"result-row")]')
 
         items = []
