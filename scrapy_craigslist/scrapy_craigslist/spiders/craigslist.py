@@ -10,24 +10,23 @@ class CraigslistSpider(BaseSpider):
     start_urls = ["https://sfbay.craigslist.org/search/sfc/apa"]
 
     def parse(self, response):
-        site = HtmlXPathSelector(response)
-        rentals = site.xpath('//li[contains(@class,"result-row")]')
+        response = HtmlXPathSelector(response)
+        rentals = response.xpath('//li[contains(@class,"result-row")]')
 
         items = []
 
-        # for rental in rentals:
-        #     item = ScrapyCraigslistItem()
-        #     item["link"] = 'https://sfbay.craigslist.org' + rental.xpath('a[contains(@href,"/sfc")]/@href').extract()
-        #     item["price"] = rental.xpath('//span[re:test(@class, "result-price")]/text()').extract()
-        #     items.append(item)
-
-        # return items
-
-
         for rental in rentals:
-            link = rental.xpath('a[contains(@href,"/sfc")]/@href').extract()
-            price = rental.xpath('span[re:test(@class, "result-price")]/text()').extract()
-            print link, price
+            item = ScrapyCraigslistItem()
+            item["link"] = 'https://sfbay.craigslist.org' + rental.xpath('a[contains(@href,"/sfc")]/@href').extract()
+            item["price"] = rental.xpath('a/span/text()').extract()
+            items.append(item)
+
+        return items
+
+        # for rental in rentals:
+        #     link = rental.xpath('a[contains(@href,"/sfc")]/@href').extract()
+        #     price = rental.xpath('a/span/text()').extract()
+        #     print link, price
 
 
         # for listing in listing_links:
