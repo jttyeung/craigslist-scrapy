@@ -9,7 +9,5 @@ import scrapy
 
 
 class CraigslistRental(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
     cl_id = scrapy.Field()
     price = scrapy.Field()

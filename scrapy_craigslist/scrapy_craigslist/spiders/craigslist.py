@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from scrapy.spiders import Spider, Request
-from scrapy.selector import Selector
-# from scrapy_craigslist.items import CraigslistRental
+from scrapy_craigslist.items import CraigslistRental
 
 
 class CraigslistSpider(Spider):
@@ -15,16 +14,13 @@ class CraigslistSpider(Spider):
         rentals = response.xpath('//li[contains(@class,"result-row")]')
 
         item = CraigslistRental()
-        # items = {}
 
         for rental in rentals:
-            cl_id = rental.xpath('a[contains(@href,"/sfc")]/@href').extract()
-            price = rental.xpath('a/span/text()').extract()
+            item['cl_id'] = rental.xpath('a[contains(@href,"/sfc")]/@href').extract()
+            item['price'] = rental.xpath('a/span/text()').extract()
 
-            yield {
-                'id': cl_id,
-                'price': price
-            }
+            yield item
+
 
         # Follows subsequent listing pages
         # next_page = response.xpath('//a[contains(@class, "button next")]/@href').extract_first()
