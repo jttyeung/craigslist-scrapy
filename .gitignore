@@ -1,3 +1,4 @@
 env/
 tutorial
-.pyc
+*.pyc
+.DS_Store
